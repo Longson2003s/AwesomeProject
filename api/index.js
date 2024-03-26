@@ -32,3 +32,5 @@ mongoose
 app.listen(port,() => {
     console.log("server is running on port 8000");
 });
+
+//enpoint to register in the app
