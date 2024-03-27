@@ -33,10 +33,50 @@ app.listen(port,() => {
     console.log("server is running on port 8000");
 });
 
+
+
+const User = require("./models/user");
+const Order = require("./models/order");
+const { send } = require("process");
+
+
+
+//funtions to send verification email to the user
+const sendVerificationEmail = async (email,verificationToken) => {
+  //create a nodemailer transport 
+
+  const  transport = nodemailer.createTransport({
+    //configuration the email service
+    service:"gmail",
+    auth:{
+      user:"longson20062003@gmail.com",
+      pass:""
+    }
+  })
+}
+
 //enpoint to register in the app
 app.post("/register",async(req,res) => {
   try{
-    
+    const {name,email,password} = req.body;
+
+    //check if the email is already registered
+    const existingUser = await User.findOne({email});
+    if(existingUser){
+      return res.status(400).json({message:"email already registered"});
+    }
+
+
+    //create a new user
+    const newUser = new User({name, email, password});
+
+    //generte and store the verification token 
+    newUser.verificationToken = crypto.randomBytes(20).toString("hex");
+
+    //save the user to the database
+    await newUser.save();
+    //send verification token email to the user
+    sendVerificationEmail(newUser.email,newUser.verificationToken);
   }catch(error){
     console.log("error registering user", error);
     res.status(500).json({message:"register failed"});
