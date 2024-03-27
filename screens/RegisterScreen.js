@@ -25,9 +25,9 @@ const RegisterScreen = () => {
     >
       <View>
         <Image
-          style={{ width: 150, height: 100 }}
+          style={{ width: 200, height: 100 }}
           source={{
-            uri: "https://w7.pngwing.com/pngs/345/378/png-transparent-mobile-shop-smartphone-texts-logo-thumbnail.png",
+            uri: "https://t4.ftcdn.net/jpg/02/77/43/25/360_F_277432530_peLp2WAlSLVtwV3h4tzFG8BhvruFrPwW.jpg",
           }}
         />
       </View>
@@ -183,7 +183,7 @@ const RegisterScreen = () => {
         </Pressable>
 
         <Pressable
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.goBack()}//go back login
           style={{ marginTop: 15 }}
         >
           <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
