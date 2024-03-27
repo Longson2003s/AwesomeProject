@@ -34,3 +34,11 @@ app.listen(port,() => {
 });
 
 //enpoint to register in the app
+app.post("/register",async(req,res) => {
+  try{
+    
+  }catch(error){
+    console.log("error registering user", error);
+    res.status(500).json({message:"register failed"});
+  }
+})
