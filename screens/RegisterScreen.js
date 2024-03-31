@@ -7,18 +7,48 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import axios from 'axios';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const navigation = useNavigation("");
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+    };
+
+    //send a post to the backend api
+    axios
+      .post("http://localhost:8081/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "register successfully",
+          "you have registered successfully"
+        );
+        setName("");
+        setPassword("");
+        setEmail("");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Registrantion Error",
+          "an error occured during registration"
+        );
+        console.log("registration failed", error);
+      });
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -161,6 +191,7 @@ const RegisterScreen = () => {
         <View style={{ marginTop: 80 }} />
 
         <Pressable
+         onPress={handleRegister}
           style={{
             width: 200,
             backgroundColor: "#FEBE10",
@@ -178,16 +209,16 @@ const RegisterScreen = () => {
               fontWeight: "bold",
             }}
           >
-            Login
+            Register
           </Text>
         </Pressable>
 
         <Pressable
-          onPress={() => navigation.goBack()}//go back login
+          onPress={() => navigation.goBack()} //go back login
           style={{ marginTop: 15 }}
         >
           <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-           Already sign up
+            Already sign up
           </Text>
         </Pressable>
       </KeyboardAvoidingView>
